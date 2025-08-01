@@ -3,19 +3,24 @@
 using namespace std;
 
 int main() {
-    HashTable<string, int> ht;
+     HashTable<string, string> ht;
 
-    ht.insert("apple", 50);
-    ht.insert("banana", 30);
-    ht.insert("cherry", 80);
+    ht.insert("name", "Vanshika");
+    ht.insert("city", "Delhi");
+    ht.insert("lang", "C++");
 
     ht.display();
 
-    int val;
-    if (ht.search("banana", val))
-        cout << "Found! Value: " << val << endl;
+    cout << "\nRemoving key 'city':\n";
+    ht.remove("city");
+
+    ht.display();
+
+    string value;
+    if (ht.search("lang", value))
+        cout << "Found: " << value << endl;
     else
-        cout << "Not Found\n";
+        cout << "Not found\n";
 
     return 0;
 }

@@ -30,6 +30,7 @@ public:
 
     void insert(K key, V value);
     bool search(K key, V& outVal); 
+    void remove(K key);
     void display();
 };
 // Constructor: set all to NULL
@@ -93,6 +94,30 @@ bool HashTable<K, V>::search(K key, V& outVal) {
         temp = temp->next;
     }
     return false;
+}
+template <typename K, typename V>
+void HashTable<K, V>::remove(K key) {
+    int index = getIndex(key);
+    Node<K, V>* temp = table[index];
+    Node<K, V>* prev = NULL;
+
+    while (temp) {
+        if (temp->key == key) {
+            if (prev == NULL) {
+                // deleting head
+                table[index] = temp->next;
+            } else {
+                prev->next = temp->next;
+            }
+            delete temp;
+            cout << "Deleted key: " << key << endl;
+            return;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+
+    cout << "Key not found: " << key << endl;
 }
 // Display function
 template <typename K, typename V>
