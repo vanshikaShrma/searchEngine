@@ -52,27 +52,32 @@ void List<T>::addAtStart(T data)
 
 // add after the given index (0 indexed)
 template <typename T>
-void List<T>::addInMiddle(int index, T data)
-{
-    Node<T> *temp = head;
-    Node<T> *tail = NULL;
-    Node<T> *newNode = new Node<T>(data);
+void List<T>::addInMiddle(int index, T data) {
+    if (index < 0) {
+        cout << "Invalid index.\n";
+        return;
+    }
+
+    Node<T>* newNode = new Node<T>(data);
+    if (index == 0 || head == NULL) {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+
+    Node<T>* temp = head;
     int i = 0;
-    while (temp && i <= index)
-    {
-        tail = temp;
+    while (temp != NULL && i < index - 1) {
         temp = temp->next;
         i++;
     }
-
-    if (temp == NULL)
-    {
-        head = newNode;
+    if (temp == NULL) {
+        cout << "Index out of range.\n";
+        delete newNode;
+        return;
     }
-    else
-    {
-        tail.next = newNode;
-    }
+    newNode->next = temp->next;
+    temp->next = newNode;
 }
 
 template <typename T>
@@ -128,7 +133,7 @@ Node<T> *List<T>::deleteFromLast()
     if (head->next == NULL)
     {
         Node<T> *temp = head;
-        head = NULL;
+        head = NULL; //use delete
         return head;
     }
     Node<T> *temp = head;
